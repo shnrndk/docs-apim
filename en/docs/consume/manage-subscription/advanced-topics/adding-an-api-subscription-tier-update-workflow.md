@@ -6,9 +6,9 @@ When the API subscription update workflow is enabled, when the subscription tier
 
 #### Engaging the Approval Workflow Executor in the API Manager
 
-1.  Sign in to API Manager Management Console (`https://<Server Host>:9443/carbon`) and go to **Browse** under **Resources**.
+1.  Sign in to API Manager Management Console (`https://<Server Host>:9443/carbon`) and go to **Browse** under **Registry**.
 
-    [![Workflow Extensions Browse]({{base_path}}/assets/img/learn/wf-extensions-browse.png)]({{base_path}}/assets/img/learn/wf-extensions-browse.png)
+    [![Workflow Extensions Browse]({{base_path}}/assets/img/learn/navigate-main-resources.png)]({{base_path}}/assets/img/learn/navigate-main-resources.png)
 
 2.  Open the `/_system/governance/apimgt/applicationdata/workflow-extensions.xml` resource and click **Edit as text**. Disable the SubscriptionUpdateSimpleWorkflowExecutor and enable SubscriptionUpdateApprovalWorkflowExecutor. 
     ``` 
@@ -55,4 +55,7 @@ When the API subscription update workflow is enabled, when the subscription tier
 
     Now the consumer can use the existing subscription with the newly assigned throttling tier.
 
-    
+10. The subscription update approval capability is now added into API Publisher portal as well to enable the Publishers of the API to approve/reject the subscriptions without being depended on the Admin for the above task. In order to check the subcription requests from the publisher portal Goto **Tasks** --> **Subscription** --> **Update**.
+
+    [![Subscription Update New Tier Request_Publisher_Portal]({{base_path}}/assets/img/learn/subscription-update-approval-in-publisher.png)]({{base_path}}/assets/img/learn/subscription-update-approval-in-publisher.png)
+

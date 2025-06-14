@@ -23,9 +23,12 @@ Follow the steps given below to configure the Global Key Manager
 
     [![Add Global Key Manager]({{base_path}}/assets/img/administer/global-keymanager/add-global-key-manager.png)]({{base_path}}/assets/img/administer/global-keymanager/add-global-key-manager.png)
 
-6. Add the Global Key Manager configurations. Refer to the [configurations]({{base_path}}/administer/key-managers/overview/#configuring-key-managers-with-wso2-api-m/) of the key manager that needs to be added as the global key manager
+6. Add the Global Key Manager configurations. Refer to the [configurations]({{base_path}}/administer/key-managers/overview/#configuring-key-managers-with-wso2-api-m) of the key manager that needs to be added as the global key manager
 
     [![Add Global Key Manager Configurations]({{base_path}}/assets/img/administer/global-keymanager/add-global-key-manager-configurations.png)]({{base_path}}/assets/img/administer/global-keymanager/add-global-key-manager-configurations.png)
+
+!!! Note
+      Refer to the configurations of the key manager that needs to be added as the global key manager.
 
 7. Click **Add** to register the Global Key Manager
 
@@ -38,34 +41,47 @@ Follow the steps given below to configure the Global Key Manager
 
 ## Trying Out the Global Key Manager
 
+Let's look at a scenario where a single access token generated for an application using the Global Key Manager is used to invoke subscribed APIs of different tenants
+
 1. Stop the WSO2 API Manager if it is already running
 
-2. Enable cross tenant subscriptions by adding the following to the `<API-M_HOME>/repository/conf/deployment.toml`
+2. Enable cross-tenant subscriptions by adding the following to the `<API-M_HOME>/repository/conf/deployment.toml`
 
     ``` toml 
     [apim.devportal]  
     enable_cross_tenant_subscriptions = true
     ```
 
+    !!! Note
+        When using cross-tenant subscriptions, if you are generating access tokens with the **Password grant** or the **Code grant**, add the following configuration to the `<API-M_HOME>/repository/conf/deployment.toml` file.
+
+        ``` toml
+        [oauth.access_token]
+        generate_with_sp_tenant_domain = "true"
+        ```
+
 3. Start the WSO2 API Manager.
 
-4. Sign in to the WSO2 API Publisher (`https://<hostname>:9443/publisher`) using the super tenant’s admin credentials
+4. [Create a tenant]({{base_path}}/administer/multitenancy/managing-tenants/) (Ex: abc.com)
 
-5. [Create an API]({{base_path}}/design/create-api/create-rest-api/create-a-rest-api/) (Eg: SampleAPI)
+5. Sign in to the WSO2 API Publisher (`https://<hostname>:9443/publisher`) using the super tenant’s admin credentials
+
+6. [Create an API]({{base_path}}/design/create-api/create-rest-api/create-a-rest-api/) (Eg: SampleAPI)
 
     [![Sample API Creation]({{base_path}}/assets/img/administer/global-keymanager/sample-api-creation.png)]({{base_path}}/assets/img/administer/global-keymanager/sample-api-creation.png)
 
-6. Go to **Portal Configurations** from the left menu and click **Subscriptions**, click the **Subscription Availability** dropdown, and select the desired subscription availability option. For this scenario, select **Available to all the tenants** and Click Save.
+7. Go to **Portal Configurations** from the left menu and click **Subscriptions**, click the **Subscription Availability** dropdown, and select the desired subscription availability option. For this scenario, select **Available to all the tenants** and Click Save.
+
+    !!! Note
+        The **Subscription Availability** option will only be displayed if there are tenants in your environment.
 
     [![Relationship between the API's visibility and subscription availability]({{base_path}}/assets/img/learn/api-subscription-availability.png)]({{base_path}}/assets/img/learn/api-subscription-availability.png)
 
-7. [Deploy the API]({{base_path}}/deploy-and-publish/deploy-on-gateway/deploy-api/deploy-an-api/)
-
-8. [Create a tenant]({{base_path}}/administer/multitenancy/managing-tenants/) (Ex: abc.com)
+8. [Deploy the API]({{base_path}}/deploy-and-publish/deploy-on-gateway/deploy-api/deploy-an-api/)
 
 9. Sign in to the WSO2 API Publisher (`https://<hostname>:9443/publisher`) using the new tenant’s (abc.com) admin credentials and repeat Steps 5 - 7
 
-10. Sign in to the WSO2 API Manager Developer Portal using the super tenant’s admin credentials (`https://<hostname>:9443/devportal`)
+10. Sign in to the super tenant's Developer Portal using the super tenant’s admin credentials (`https://<hostname>:9443/devportal`)
 
 11. [Create an application]({{base_path}}/consume/manage-application/create-application/) (Ex: SampleApp)
 
@@ -77,7 +93,7 @@ Follow the steps given below to configure the Global Key Manager
 
 13. Click **GENERATE KEYS**
 
-14. Click **GENERATE ACCESS TOKEN** to create an application access token. Make sure to copy the generated JWT access token that appears so that you can use it in the future.
+14. Click **GENERATE ACCESS TOKEN** to generate an application access token. Make sure to copy the generated JWT access token that appears so that you can use it in the future.
 
 15. Go to the Developer Portal landing page, select the SampleAPI and [Subscribe]({{base_path}}/consume/manage-subscription/subscribe-to-an-api/#subscribe-to-an-existing-application) to the SampleApp
 
@@ -104,4 +120,8 @@ Follow the steps given below to configure the Global Key Manager
 
 A Successful response indicates that the API of a tenant can be invoked using an access token generated for an application using the Global Key Manager. Note that the access token was generated in the super tenant’s Developer Portal, but an API in a different tenant was invoked using this access token
 
-This scenario depicts a use-case where an access token generated for an application using the Global Key Manager is used to invoke subscribed APIs of different tenants
+!!! note
+    Access tokens generated via the Global Key Manager using the client credentials grant type will not contain any scopes.
+
+    ??? note "Why?"
+        The Global Key Manager operates within a separate tenant, and the applications created by the Global Key Manager are located in this tenant. This tenant does not have visibility into the user base or roles of other tenants. Consequently, tokens issued through these applications using the client credentials grant cannot be used to validate scopes against user roles from other tenants.

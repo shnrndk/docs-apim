@@ -9,9 +9,9 @@ Attaching a custom workflow to API subscription enables you to add throttling ti
 
 First, enable the API subscription workflow for **Approval Workflow Executor.**
 
-1.  Sign in to API Manager Management Console ( `https://<Server Host>:9443/carbon` ) and select **Browse** under **Resources** .
+1.  Sign in to API Manager Management Console ( `https://<Server Host>:9443/carbon` ) and select **Browse** under **Registry** .
 
-    ![]({{base_path}}/assets/img/learn/wf-extensions-browse.png)
+    ![]({{base_path}}/assets/img/learn/navigate-main-resources.png)
 
 2.  Go to the `/_system/governance/apimgt/applicationdata/workflow-extensions.xml` resource, disable the Simple Workflow Executor and enable WS Workflow Executor.
 
@@ -38,6 +38,10 @@ First, enable the API subscription workflow for **Approval Workflow Executor.**
      
     [![Subscription Creation Unblocked]({{base_path}}/assets/img/learn/subscription-creation-unblocked.png)]({{base_path}}/assets/img/learn/subscription-creation-unblocked.png)
 
-5.  Go back to the API Developer Portal and see that the user is now subscribed to the API.
+5. The subscription creation approval capability is now added into API Publisher portal as well to enable the Publishers of the API to approve/reject the subscriptions without being depended on the Admin for the above task. In order to check the subcription requests from the publisher portal Goto **Tasks** --> **Subscription** --> **Creation**.
+
+    [![Subscription Creation Tasks in Publisher portal]({{base_path}}/assets/img/learn/subscription-creation-pending-list-in-publisher-portal.png)]({{base_path}}/assets/img/learn/subscription-creation-pending-list-in-publisher-portal.png)
+
+6. Go back to the API Developer Portal and see that the user is now subscribed to the API.
 
 For instructions on how to customize workflow extensions, see [Customizing a Workflow Extension]({{base_path}}/reference/customize-product/extending-api-manager/extending-workflows/customizing-a-workflow-extension/).

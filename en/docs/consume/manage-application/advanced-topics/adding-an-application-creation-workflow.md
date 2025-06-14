@@ -15,16 +15,16 @@ First enable the approve workflow executor for application creation.
 
 1.  Sign in to WSO2 API-M Management Console (`https://<Server-Host>:9443/carbon`).
 
-2. Click **Main** --> **Resources** --> **Browse**.
+2. Click **Main** --> **Registry** --> **Browse**.
 
-    <a href="{{base_path}}/assets/img/learn/wf-extensions-browse.png"><img src="{{base_path}}/assets/img/learn/wf-extensions-browse.png" width="250" height="100"/></a>
+    <a href="{{base_path}}/assets/img/learn/navigate-main-resources.png"><img src="{{base_path}}/assets/img/learn/navigate-main-resources.png" width="250" height="100"/></a>
     
 3.  Go to the `/_system/governance/apimgt/applicationdata/workflow-extensions.xml` resource, click on `Edit as text` to edit the file, disable the Simple Workflow Executor, and enable **Approval Workflow Executor** for application creation.
 
     ``` xml
     <WorkFlowExtensions>
         <!--ApplicationCreation executor="org.wso2.carbon.apimgt.impl.workflow.ApplicationCreationSimpleWorkflowExecutor"-->
-        <ApplicationCreation executor="org.wso2.carbon.apimgt.impl.workflow.ApplicationCreationApprovalWorkflowExecutor">
+        <ApplicationCreation executor="org.wso2.carbon.apimgt.impl.workflow.ApplicationCreationApprovalWorkflowExecutor"/>
     </WorkFlowExtensions>
     ```
 
